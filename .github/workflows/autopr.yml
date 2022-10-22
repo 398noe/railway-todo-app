@@ -4,7 +4,7 @@ name: Create a pull request when pushed new branch.
 on:
   push:
     branches:
-      - "features/**"
+      - "feature/**"
       - "fix/**"
       - "setup/**"
 
