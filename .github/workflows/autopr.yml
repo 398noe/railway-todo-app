@@ -32,4 +32,4 @@ jobs:
         # head_branch_name -> main に対してpull request作成
         run: |
           head_branch=${{ github.ref_name }}
-          gh pr create -B ${steps.check_pr.outputs.base_branch} -H ${head_branch} -t ${steps.check_pr.outputs.pull_request_title} -b "Auto created by github actions."
+          gh pr create -B ${{ steps.check_pr.outputs.base_branch }} -H ${head_branch} -t ${{ steps.check_pr.outputs.pull_request_title }} -b "Auto created by github actions."
