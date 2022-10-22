@@ -29,6 +29,7 @@ jobs:
           echo "::set-output name=base_branch::$base_branch"
       - name: Create new pull request
         if: ${{ steps.check_pr.outputs.count == 0 }}
+
         # head_branch_name -> main に対してpull request作成
         run: |
           head_branch=${{ github.ref_name }}
