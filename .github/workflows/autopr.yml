@@ -22,7 +22,7 @@ jobs:
       - name: Check if exists of pull request
         id: check_pr
         run: |
-          pull_request_title=${github.ref_name}
+          pull_request_title=${{ github.ref_name }}
           base_branch="main"
           echo "::set-output name=count::$(gh pr list -S ${pull_request_title}' in:title' -B $base_branch | wc -l)"
           echo "::set-output name=pull_request_title::$pull_request_title"
@@ -31,5 +31,5 @@ jobs:
         if: ${{ steps.check_pr.outputs.count == 0 }}
         # head_branch_name -> main に対してpull request作成
         run: |
-          head_branch=${ github.ref_name }
-          gh pr create -B {steps.check_pr.outputs.base_branch} -H ${head_branch} -t ${steps.check_pr.outputs.pull_request_title} -b "Auto created by github actions."
+          head_branch=${{ github.ref_name }}
+          gh pr create -B ${steps.check_pr.outputs.base_branch} -H ${head_branch} -t ${steps.check_pr.outputs.pull_request_title} -b "Auto created by github actions."
