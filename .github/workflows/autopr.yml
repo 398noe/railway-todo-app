@@ -24,9 +24,9 @@ jobs:
         run: |
           pull_request_title=${{ github.ref_name }}
           base_branch="main"
-          echo "::set-output name=count::$(gh pr list -S ${pull_request_title}' in:title' -B $base_branch | wc -l)"
-          echo "::set-output name=pull_request_title::$pull_request_title"
-          echo "::set-output name=base_branch::$base_branch"
+          echo "{count}=$(gh pr list -S ${pull_request_title}' in:title' -B $base_branch | wc -l)" >> $GITHUB_OUTPUT
+          echo "{pull_request_title}=$pull_request_title" >> $GITHUB_OUTPUT
+          echo "{base_branch}=$base_branch" >> $GITHUB_OUTPUT
       - name: Create new pull request
         if: ${{ steps.check_pr.outputs.count == 0 }}
 
