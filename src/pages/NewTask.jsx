@@ -3,13 +3,14 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
-import "./newTask.scss"
 import { useNavigate } from "react-router-dom";
-import { format, setHours, setMinutes, setSeconds } from "date-fns";
+import { format, setSeconds } from "date-fns";
 import ja from "date-fns/locale/ja";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import "./newTask.scss"
 
+// setting locale
 registerLocale("ja", ja);
 
 export const NewTask = () => {
@@ -17,9 +18,9 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
-  const [startDate, setStartDate] = useState(
+  const [endDate, setStartDate] = useState(
     setSeconds(new Date(),0)
-  )
+  );
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export const NewTask = () => {
 
   useEffect(() => {
     // 力技になるが、いたしかたない
-    console.log(format(startDate, "yyyy-MM-dd") + "T" + format(startDate, "hh:mm:ss") + "Z");
+    console.log(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "hh:mm:ss") + "Z");
   }, [])
 
   useEffect(() => {
@@ -86,11 +87,12 @@ export const NewTask = () => {
           <p>期限</p>
           <ReactDatePicker
             className="date-picker"
-            selected={startDate}
+            selected={endDate}
             onChange={(date) => setStartDate(date)}
             showTimeSelect
-            dateFormat={"yyyy-MM-ddhh:mm:ss"}
+            dateFormat={"yyyy-MM-dd hh:mm:ss"}
           />
+          <div className="spacer"/>
           <button type="button" className="new-task-button" onClick={onCreateTask}>作成</button>
         </form>
       </main>
