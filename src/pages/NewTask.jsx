@@ -18,9 +18,10 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
-  const [endDate, setStartDate] = useState(
+  const [endDate, setEndDate] = useState(
     setSeconds(new Date(),0)
   );
+  const [limitDate, setLimitDate] = useState(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "hh:mm:ss") + "Z");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const navigate = useNavigate();
@@ -32,7 +33,8 @@ export const NewTask = () => {
       title: title,
       detail: detail,
       done: false,
-    };
+      limit: limitDate
+    }
 
     axios.post(`${url}/lists/${selectListId}/tasks`, data, {
         headers: {
@@ -47,10 +49,15 @@ export const NewTask = () => {
     })
   }
 
+  // 確認のために表示
   useEffect(() => {
-    // 力技になるが、いたしかたない
-    console.log(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "hh:mm:ss") + "Z");
-  }, [])
+    console.log(limitDate + "Z");
+  }, [limitDate])
+
+  // フォーマットに沿っていないデータをそのまま入れるのは危険なので一時的にlimitDateを通じてそれを直接axiosのリクエストデータに含めるようにする
+  useEffect(() => {
+    setLimitDate(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "hh:mm:ss") + "Z");
+  }, [endDate]);
 
   useEffect(() => {
     axios.get(`${url}/lists`, {
@@ -88,7 +95,7 @@ export const NewTask = () => {
           <ReactDatePicker
             className="date-picker"
             selected={endDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => setEndDate(date)}
             showTimeSelect
             dateFormat={"yyyy-MM-dd hh:mm:ss"}
           />
