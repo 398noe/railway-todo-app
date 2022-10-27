@@ -10,9 +10,6 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import "./newTask.scss"
 
-// setting locale
-registerLocale("ja", ja);
-
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
@@ -51,12 +48,13 @@ export const NewTask = () => {
 
   // 確認のために表示
   useEffect(() => {
-    console.log(limitDate + "Z");
+    console.log(limitDate);
   }, [limitDate])
 
   // フォーマットに沿っていないデータをそのまま入れるのは危険なので一時的にlimitDateを通じてそれを直接axiosのリクエストデータに含めるようにする
   useEffect(() => {
-    setLimitDate(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "hh:mm:ss") + "Z");
+    console.log(endDate.toISOString());
+    setLimitDate(format(endDate, "yyyy-MM-dd") + "T" + format(endDate, "HH:mm:ss") + "Z");
   }, [endDate]);
 
   useEffect(() => {
@@ -97,7 +95,7 @@ export const NewTask = () => {
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             showTimeSelect
-            dateFormat={"yyyy-MM-dd hh:mm:ss"}
+            dateFormat={"yyyy-MM-dd HH:mm:ss"}
           />
           <div className="spacer"/>
           <button type="button" className="new-task-button" onClick={onCreateTask}>作成</button>
