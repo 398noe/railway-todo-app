@@ -6,7 +6,6 @@ import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.scss";
 
-
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
