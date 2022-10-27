@@ -3,6 +3,7 @@
 .new-task {
   width: 1000px;
   margin: 0 auto;
+  padding: 1rem;
 }
 
 .new-task-form {
@@ -28,4 +29,15 @@
 
 .error-message {
   color: #ff3333;
+}
+
+.date-picker {
+  padding: 1rem;
+  border: #aaaaaa;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.spacer {
+  margin: 4rem;
 }
